@@ -4,7 +4,7 @@ There are two ways to run the 1ForgeAPI collection.
 The first one is through the Collection runner by using the forex_dataset.csv file.
 The second one is to directly send the API call and to validate particular pair(s).
 
-The two examples below illustate the solution
+The two examples below illustrate the solution
 
 ------------------------------------------------------
 Using the .csv file and perform more than 1 iterations
