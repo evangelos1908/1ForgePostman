@@ -1,0 +1,95 @@
+{
+	"info": {
+		"_postman_id": "3978a047-3a0d-43b2-9bfe-1823024476cc",
+		"name": "1ForgePostam",
+		"description": "1forge",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GetQuotes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "55961b4b-eda9-45ad-b501-945f5cc7c40c",
+						"exec": [
+							"var actualResponse = pm.response.json();",
+							"// test to verify the status code",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"// tests to verify the API response",
+							"var count = 0;   ",
+							"var symbol = actualResponse[0].symbol",
+							"var getExpectedSymbol = null",
+							"",
+							"if(data.quote == null){",
+							"    console.log(\"DEBUG: data.quote is null\");",
+							"    getExpectedSymbol = JSON.parse(postman.getEnvironmentVariable(symbol)).symbol;",
+							"}else{",
+							"    getExpectedSymbol = data.quote",
+							"}",
+							"",
+							"tests[\"verify symbol name is matching for symbol \"+symbol] = symbol == getExpectedSymbol;",
+							"    ",
+							"// tests to verify the keys are present in all the objects",
+							"tests[\"verify key symbol is present in object \"] = pm.expect(actualResponse[0]).to.have.property('symbol');",
+							"tests[\"verify key bid is present in object \"] = pm.expect(actualResponse[0]).to.have.property('bid');",
+							"tests[\"verify key ask is present in object \"] = pm.expect(actualResponse[0]).to.have.property('ask');",
+							"tests[\"verify key price is present in object \"] = pm.expect(actualResponse[0]).to.have.property('price');",
+							"tests[\"verify key timestamp is present in object \"] = pm.expect(actualResponse[0]).to.have.property('timestamp');",
+							"    ",
+							"var actualres =JSON.stringify(actualResponse[0]);",
+							"var myObject = eval('(' + actualres + ')');",
+							"for (j in myObject)",
+							"    {",
+							"        count = count+1;",
+							"    }",
+							"tests[\"verify number of keys in object \"] = count == 5;",
+							"",
+							"",
+							"// verify the number of objects",
+							"tests[\"verify the number of objects\"] = actualResponse.length == 1;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://forex.1forge.com/1.0.3/quotes?pairs={{quote}}&api_key={{APIKey}}",
+					"protocol": "https",
+					"host": [
+						"forex",
+						"1forge",
+						"com"
+					],
+					"path": [
+						"1.0.3",
+						"quotes"
+					],
+					"query": [
+						{
+							"key": "pairs",
+							"value": "{{quote}}"
+						},
+						{
+							"key": "api_key",
+							"value": "{{APIKey}}"
+						}
+					]
+				},
+				"description": "GetQuotes"
+			},
+			"response": []
+		}
+	]
+}
